@@ -49,7 +49,7 @@ namespace :uec do
   end
   
   desc "Terminates a current UEC instance"
-  task :terminate_instnace do
+  task :terminate_instance do
     uec.list_instances
     instance = Capistrano::CLI.ui.ask("Instance ID(s): ")
     output = capture "euca-terminate-instances #{instance}"

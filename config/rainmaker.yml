@@ -1,0 +1,10 @@
+#cloud-config
+#IMPORTANT -- LEAVE THE ABOVE LINE IN PLACE
+apt_upgrade: true
+
+# List SSH public keys to install in the following block, one per line  
+# formatted as yaml elements under the ssh_authorized_keys key. Uncomment 
+# the following as an example
+#
+# ssh_authorized_keys:
+#   - ssh-dss A123456790....0987654321A== foo@bar.com

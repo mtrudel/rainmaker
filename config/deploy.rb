@@ -31,8 +31,10 @@ logger.level = 0
 namespace :uec do
   desc "Starts a new UEC instance"
   task :new_instance do
-    config = File.read(File.join(File.dirname(__FILE__), "rainmaker.yml"))
-    output = capture "euca-run-instances -d \"#{config}\" -t #{machine_type} #{emi}"
+    config_file = "rainmaker-#{rand(1000000)}"
+    upload(File.join(File.dirname(__FILE__), "rainmaker.yml"), config_file)
+    output = capture "euca-run-instances -f #{config_file} -t #{machine_type} #{emi}"
+    run "rm #{config_file}"
     instance = output.match(/INSTANCE\W*([\w\-]*)/)[1]
     print "Got instance #{instance}. Waiting a few seconds to get its IP address..."
     print "." until sleep(5) && capture('euca-describe-instances').match(/^INSTANCE\W*#{instance}\W*[\w\-]*\W*[\d\.]*\W*[\d\.]*\W*([\w\-]*).*$/)[1] == 'running'
